@@ -13,14 +13,19 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App
 {
-    public static boolean search(ArrayList<Integer> array, int e) {
-      System.out.println("inside search");
-      if (array == null) return false;
+    public static boolean compare_array_indexes(ArrayList<Integer> array_1, ArrayList<Integer> array_2, int e, int k) {
+      
+      if (array_1 == null || array_2 == null) return false;
 
-      for (int elt : array) {
-        if (elt == e) return true;
-      }
+      if (array_1.size() <= e || array_2.size() <= k) return false;
+
+      if (array_1.isEmpty() || array_2.isEmpty()) return false;
+
+      if(array_1.get(e) == array_2.get(k)) return true;
+
       return false;
+
+
     }
 
     public static void main(String[] args) {
@@ -35,19 +40,33 @@ public class App
           String input1 = req.queryParams("input1");
           java.util.Scanner sc1 = new java.util.Scanner(input1);
           sc1.useDelimiter("[;\r\n]+");
-          java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+          java.util.ArrayList<Integer> input1List = new java.util.ArrayList<>();
           while (sc1.hasNext())
           {
             int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-            inputList.add(value);
+            input1List.add(value);
           }
-          System.out.println(inputList);
+          System.out.println(input1List);
+
+          String input2 = req.queryParams("input2");
+          java.util.Scanner sc2 = new java.util.Scanner(input2);
+          sc2.useDelimiter("[;\r\n]+");
+          java.util.ArrayList<Integer> input2List = new java.util.ArrayList<>();
+          while (sc2.hasNext())
+          {
+            int value = Integer.parseInt(sc2.next().replaceAll("\\s",""));
+            input2List.add(value);
+          }
+          System.out.println(input2List);
 
 
-          String input2 = req.queryParams("input2").replaceAll("\\s","");
-          int input2AsInt = Integer.parseInt(input2);
+          String input3 = req.queryParams("input3").replaceAll("\\s","");
+          int input3AsInt = Integer.parseInt(input3);
 
-          boolean result = App.search(inputList, input2AsInt);
+          String input4 = req.queryParams("input4").replaceAll("\\s","");
+          int input4AsInt = Integer.parseInt(input4);
+
+          boolean result = App.compare_array_indexes(input1List, input2List, input3AsInt, input4AsInt);
 
          Map map = new HashMap();
           map.put("result", result);
